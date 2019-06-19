@@ -14,5 +14,54 @@
     <ol>
 
     </ol>
+
+    <script>
+    
+        var pilhaLista = [];
+        var lista = document.getElementsByTagName("ol")[0];
+
+        document.forms.itemPilha.addEventListener("submit", processaEmpilhar);
+        document.getElementById("desempilhar").addEventListener("click", processaDesempilhar);
+
+        function printLista(){
+            lista.innerHTML = "";
+            var i;
+            for(i=0; i < pilhaLista.length; i++){
+                var li = document.createElement("li");
+                li.textContent = pilhaLista[i];
+                lista.appendChild(li);
+            }
+        }
+
+        function processaEmpilhar(e){
+            e.preventDefault();
+            
+            var item = document.forms.itemPilha.item.value;
+
+            if(item != ""){
+                var novoItem = item;
+                pilhaLista.reverse();
+                pilhaLista.push(novoItem);  
+                pilhaLista.reverse();
+
+                printLista();
+            }
+
+            document.forms.itemPilha.reset();
+            document.forms.itemPilha.item.focus();
+        }
+
+        function processaDesempilhar(e){
+            e.preventDefault();
+
+            pilhaLista.reverse();
+            pilhaLista.pop();
+            pilhaLista.reverse();
+            printLista();
+            console.log(pilhaLista);
+        }
+
+    </script>
+
 </body>
 </html>
