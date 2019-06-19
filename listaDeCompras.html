@@ -6,14 +6,42 @@
 </head>
 <body>
     <h1>Lista de Compras</h1>
-    <form name="itens">
+    <form name="itensAdd">
         <input type="text" name="item">
         <input type="number" name="quantidade"/>
         <input type="submit"/>
         <input type="reset"/>
     </form>
     <ul>
-        
+
     </ul>
+
+    <script>
+        
+        var itens = [];
+        var lista = document.getElementsByTagName("ul")[0];
+
+        document.forms.itensAdd.addEventListener("submit", processaEnvio);
+
+        function processaEnvio(e){
+            e.preventDefault();
+            console.log("Formulário Enviado!");
+
+            var item = document.forms.itensAdd.item.value;
+            var quantidade = document.forms.itensAdd.quantidade.value;
+
+            var novoItem = {"item": item, "quantidade": quantidade};
+            itens.push(novoItem);
+
+            var novoLi = document.createElement("li");
+            novoLi.textContent = novoItem.item + " " + novoItem.quantidade;
+            lista.appendChild(novoLi);
+
+            document.forms.itensAdd.reset();
+            document.forms.itensAdd.item.focus();
+        }
+    
+    </script>
+
 </body>
 </html>
