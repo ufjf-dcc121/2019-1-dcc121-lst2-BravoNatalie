@@ -10,7 +10,7 @@
         <input type="text" name="item">
         <input type="number" name="quantidade"/>
         <input type="submit"/>
-        <input type="reset"/>
+        <button id="limpa">Limpar</button>
     </form>
     <ul>
 
@@ -22,6 +22,9 @@
         var lista = document.getElementsByTagName("ul")[0];
 
         document.forms.itensAdd.addEventListener("submit", processaEnvio);
+        document.getElementById("limpa").addEventListener("click", function apagarLista(){
+            lista.innerHTML = "";
+        });
 
         function processaEnvio(e){
             e.preventDefault();
@@ -30,13 +33,14 @@
             var item = document.forms.itensAdd.item.value;
             var quantidade = document.forms.itensAdd.quantidade.value;
 
-            var novoItem = {"item": item, "quantidade": quantidade};
-            itens.push(novoItem);
+            if(quantidade > 0){
+                var novoItem = {"item": item, "quantidade": quantidade};
+                itens.push(novoItem);
 
-            var novoLi = document.createElement("li");
-            novoLi.textContent = novoItem.item + " " + novoItem.quantidade;
-            lista.appendChild(novoLi);
-
+                var novoLi = document.createElement("li");
+                novoLi.textContent = novoItem.item + " " + novoItem.quantidade;
+                lista.appendChild(novoLi);
+            }
             document.forms.itensAdd.reset();
             document.forms.itensAdd.item.focus();
         }
