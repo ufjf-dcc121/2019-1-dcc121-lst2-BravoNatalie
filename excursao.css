@@ -1,0 +1,24 @@
+
+body{
+    width: 20%;
+    margin: auto;
+}
+
+h1{
+    text-align: center;
+}
+
+h3{
+    margin-left: 10px;
+}
+
+#cadastro{
+    border: 2px solid black;
+    text-align: center;
+    padding-top: 10px; 
+    padding-bottom: 10px;
+}
+
+#lista{
+    border: 2px solid black;
+}
