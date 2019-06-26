@@ -22,3 +22,11 @@ h3{
 #lista{
     border: 2px solid black;
 }
+
+.del{
+    visibility: hidden;
+}
+
+.pessoa:hover .del{
+    visibility: visible;
+}

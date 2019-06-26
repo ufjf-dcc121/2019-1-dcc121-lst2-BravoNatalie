@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset='utf-8'>
     <title>Organizar Excursão</title>
-    <link rel="stylesheet" href="excursao.css"/>
+    <link rel="stylesheet" href="excursao.css" />
 </head>
-<body>
 
+<body>
     <h1>Excursão</h1>
     <div id="cadastro">
-        <form nome="cadastrar">
-            <div> <label> Nome: <input type="text" name="nome" placeholder="Digite o nome aqui"/> </label> </div>
-            <div> <label> Idade : </label><input type="number" name="idade" placeholder="Digite a idade aqui"/> </label> </div>
-            <input type="submit" value="Enviar"/>
+        <form name="cadastrar">
+            <div> <label> Nome: <input type="text" name="nome" placeholder="Digite o nome aqui" /> </label> </div>
+            <div> <label> Idade : <input type="number" name="idade" placeholder="Digite a idade aqui" /> </label> </div>
+            <input type="submit" value="Enviar" />
         </form>
     </div>
     <div id="lista">
@@ -26,6 +27,95 @@
 
         </ul>
     </div>
-    
+
+    <script>
+
+        listaEstudante = [];
+        listaAdulto = [];
+        var lisA = document.getElementById("adulto");
+        var lisE = document.getElementById("estudante");
+
+        document.forms.cadastrar.addEventListener("submit", processaEnvio);
+
+        document.addEventListener("click", listener);
+
+        function processaEnvio(e) {
+            e.preventDefault();
+
+            var nome = document.forms.cadastrar.nome.value;
+            var idade = document.forms.cadastrar.idade.value;
+
+            if (nome != "" && !isNaN(Number(idade)) && Number(idade) > 0) {
+                console.log(listaAdulto);
+                var novoItem = { "nome": nome, "idade": idade };
+                var novoLi = document.createElement("li");
+
+                novoLi.innerHTML = "<div class=\"pessoa\">" + "<span contenteditable=\"true\" name=\"pnome\">" + novoItem.nome + "</span> - <span contenteditable=\"true\" name=\"pidade\">" + novoItem.idade + "</span>" + "<button class=\"del\">Excluir</buttonconsole.log(listaAdulto);>" + "</div>";
+
+                if (idade > 18) {
+                    if (search(listaAdulto, novoItem) == -1) {
+                        listaAdulto.push(novoItem);
+                        lisA.appendChild(novoLi);
+                    }
+                } else {
+                    if (search(listaEstudante, novoItem) == -1) {
+                        listaEstudante.push(novoItem);
+                        lisE.appendChild(novoLi);
+                    }
+                }
+            }
+            document.forms.cadastrar.reset();
+            document.forms.cadastrar.nome.focus();
+        }
+
+        function printLista(lista, listaHTML) {
+            for (var i = 0; i < lista.length; i++) {
+                var novoLi = document.createElement("li");
+                novoLi.innerHTML = "<div class=\"pessoa\">" + "<span contenteditable=\"true\" name=\"pnome\">" + lista[i].nome + "</span> - <span contenteditable=\"true\" name=\"pidade\">" + lista[i].idade + "</span>" + "<button class=\"del\">Excluir</buttonconsole.log(listaAdulto);>" + "</div>";
+                listaHTML.appendChild(novoLi);
+            }
+        }
+
+        function listener(event) {
+            var element = event.target;
+            console.log(element.classList);
+            if (element.nodeName == "BUTTON" && element.classList.contains("del")) {
+                excluir(event.path[1]);
+            }
+        }
+
+        function excluir(element) {
+            var idadeP = element.childNodes[2].childNodes[0].nodeValue;
+            var nomeP = element.childNodes[0].childNodes[0].nodeValue;
+            var pessoa = { "nome": nomeP, "idade": idadeP };
+
+            var index = search(listaAdulto, pessoa);
+            if (index >= 0) {
+                listaAdulto.splice(index, 1);
+                lisA.innerHTML = "";
+                printLista(listaAdulto, lisA);
+
+            } else {
+                index = search(listaEstudante, pessoa);
+                if (index >= 0) {
+                    listaEstudante.splice(index, 1);
+                    lisE.innerHTML = "";
+                    printLista(listaEstudante, lisE);
+                }
+            }
+        }
+
+        function search(lista, pessoa) {
+            for (var i = 0; i < lista.length; i++) {
+                if (JSON.stringify(lista[i]) === JSON.stringify(pessoa)) {
+                    return i;
+                }
+            }
+            return -1
+        }
+
+    </script>
+
 </body>
+
 </html>
